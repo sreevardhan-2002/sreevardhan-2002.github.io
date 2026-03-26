@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pemmareddy Sreevardhan | AI & Data Science</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* ──────────────────────────────────────────────────
+       ROOT TOKENS
+    ────────────────────────────────────────────────── */
+    :root {
+      --bg:        #05050f;
+      --bg2:       #0d0d1a;
+      --card:      rgba(255,255,255,0.04);
+      --card-h:    rgba(255,255,255,0.07);
+      --border:    rgba(255,255,255,0.08);
+      --cyan:      #00d4ff;
+      --purple:    #8b5cf6;
+      --pink:      #ec4899;
+      --amber:     #f59e0b;
+      --green:     #10b981;
+      --text:      #f0f4ff;
+      --text2:     #94a3b8;
+      --text3:     #64748b;
+      --grad:      linear-gradient(135deg,#00d4ff,#8b5cf6);
+      --grad2:     linear-gradient(135deg,#8b5cf6,#ec4899);
+      --glow-c:    0 0 24px rgba(0,212,255,.25);
+      --glow-p:    0 0 24px rgba(139,92,246,.25);
+      --ff:        'Space Grotesk', sans-serif;
+      --fc:        'Fira Code', monospace;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:76px; }
+    body { background:var(--bg); color:var(--text); font-family:var(--ff); overflow-x:hidden; cursor:none; }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width:4px; }
+    ::-webkit-scrollbar-track { background:var(--bg); }
+    ::-webkit-scrollbar-thumb { background:var(--purple); border-radius:4px; }
+
+    /* ──────────────────────────────────────────────────
+       CURSOR
+    ────────────────────────────────────────────────── */
+    #cur  { width:10px; height:10px; background:var(--cyan); border-radius:50%; position:fixed; pointer-events:none; z-index:9999; mix-blend-mode:screen; transition:transform .15s,background .2s; }
+    #cur2 { width:34px; height:34px; border:1.5px solid rgba(0,212,255,.45); border-radius:50%; position:fixed; pointer-events:none; z-index:9998; mix-blend-mode:screen; transition:border-color .2s; }
+    body:not(:hover) #cur, body:not(:hover) #cur2 { opacity:0; }
+
+    /* ──────────────────────────────────────────────────
+       PROGRESS BAR
+    ────────────────────────────────────────────────── */
+    #progress { position:fixed; top:0; left:0; height:3px; background:var(--grad); z-index:1001; width:0; transition:width .08s; }
+
+    /* ──────────────────────────────────────────────────
+       NAVBAR
+    ────────────────────────────────────────────────── */
+    nav {
+      position:fixed; inset:0 0 auto 0; z-index:1000;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:.9rem 2.5rem;
+      transition:background .3s, border-color .3s, backdrop-filter .3s;
+    }
+    nav.scrolled {
+      background:rgba(5,5,15,.88);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid var(--border);
+    }
+    .nav-logo {
+      font-size:1.35rem; font-weight:700;
+      background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+      letter-spacing:-0.5px;
+    }
+    .nav-links { list-style:none; display:flex; gap:2rem; }
+    .nav-links a {
+      color:var(--text2); text-decoration:none; font-size:.88rem; font-weight:500;
+      letter-spacing:.4px; position:relative; transition:color .25s;
+    }
+    .nav-links a::after {
+      content:''; position:absolute; bottom:-4px; left:0; width:0; height:1.5px;
+      background:var(--grad); transition:width .3s;
+    }
+    .nav-links a:hover { color:var(--cyan); }
+    .nav-links a:hover::after { width:100%; }
+    .nav-links a.active { color:var(--cyan); }
+    .nav-links a.active::after { width:100%; }
+    .nav-cta {
+      padding:.45rem 1.1rem !important;
+      border:1px solid var(--cyan) !important;
+      border-radius:6px !important;
+      color:var(--cyan) !important;
+      transition:all .25s !important;
+    }
+    .nav-cta:hover { background:var(--cyan) !important; color:var(--bg) !important; }
+    .burger { display:none; background:none; border:none; color:var(--text); font-size:1.3rem; cursor:pointer; }
+
+    /* ──────────────────────────────────────────────────
+       SECTION SHARED
+    ────────────────────────────────────────────────── */
+    section { padding:100px 0; position:relative; }
+    .container { max-width:1180px; margin:0 auto; padding:0 2rem; }
+    .sec-tag {
+      display:inline-block; font-family:var(--fc); font-size:.78rem;
+      color:var(--cyan); letter-spacing:2px; text-transform:uppercase; margin-bottom:.6rem;
+    }
+    .sec-title {
+      font-size:clamp(1.9rem,4vw,2.8rem); font-weight:700;
+      letter-spacing:-1px; line-height:1.1; margin-bottom:.75rem;
+    }
+    .sec-title span { background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .sec-sub { color:var(--text2); font-size:.97rem; max-width:580px; line-height:1.7; }
+
+    /* grid bg */
+    .grid-bg {
+      position:absolute; inset:0; pointer-events:none;
+      background-image:linear-gradient(rgba(0,212,255,.025) 1px,transparent 1px),
+                       linear-gradient(90deg,rgba(0,212,255,.025) 1px,transparent 1px);
+      background-size:52px 52px;
+    }
+
+    /* scroll reveal */
+    .rv  { opacity:0; transform:translateY(28px);  transition:opacity .7s ease,transform .7s ease; }
+    .rvL { opacity:0; transform:translateX(-28px); transition:opacity .7s ease,transform .7s ease; }
+    .rvR { opacity:0; transform:translateX(28px);  transition:opacity .7s ease,transform .7s ease; }
+    .rv.on,.rvL.on,.rvR.on { opacity:1; transform:none; }
+
+    /* divider */
+    .div { height:1px; background:linear-gradient(90deg,transparent,var(--cyan),var(--purple),transparent); opacity:.2; }
+
+    /* ──────────────────────────────────────────────────
+       HERO
+    ────────────────────────────────────────────────── */
+    #hero {
+      min-height:100vh; display:flex; align-items:center; justify-content:center;
+      position:relative; overflow:hidden;
+    }
+    #canvas { position:absolute; inset:0; z-index:0; }
+    .orb { position:absolute; border-radius:50%; filter:blur(90px); pointer-events:none; opacity:.22; }
+
+    .hero-inner {
+      position:relative; z-index:1; text-align:center;
+      max-width:860px; padding:0 2rem;
+    }
+    .hero-badge {
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.38rem 1rem;
+      background:rgba(0,212,255,.08); border:1px solid rgba(0,212,255,.25); border-radius:100px;
+      font-size:.78rem; color:var(--cyan); font-family:var(--fc); margin-bottom:1.5rem;
+      animation:fadeDown .7s ease both;
+    }
+    .hero-badge .dot {
+      width:7px; height:7px; background:var(--green); border-radius:50%;
+      animation:pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.75)} }
+
+    .hero-name {
+      font-size:clamp(2.4rem,7.5vw,5.5rem); font-weight:700;
+      letter-spacing:-2px; line-height:1.05; margin-bottom:.4rem;
+      animation:fadeUp .8s ease .1s both;
+    }
+    .hero-name .n1 { display:block; color:var(--text); }
+    .hero-name .n2 { display:block; background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+    .hero-role {
+      font-size:clamp(.95rem,2.2vw,1.25rem); font-family:var(--fc);
+      color:var(--text2); margin-bottom:1.4rem;
+      animation:fadeUp .8s ease .2s both;
+    }
+    .hero-role .typed { color:var(--cyan); }
+    .hero-role .blink {
+      display:inline-block; width:2px; height:1.05em;
+      background:var(--cyan); margin-left:2px; vertical-align:middle;
+      animation:blink 1s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .hero-desc {
+      font-size:.97rem; color:var(--text2); line-height:1.75;
+      max-width:600px; margin:0 auto 2.4rem;
+      animation:fadeUp .8s ease .3s both;
+    }
+    .hero-actions {
+      display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;
+      animation:fadeUp .8s ease .4s both;
+    }
+    .btn {
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.78rem 1.75rem; border-radius:8px; font-size:.93rem; font-weight:600;
+      text-decoration:none; border:none; font-family:var(--ff); cursor:pointer;
+      transition:all .3s ease;
+    }
+    .btn-p { background:var(--grad); color:#fff; box-shadow:0 4px 22px rgba(0,212,255,.22); }
+    .btn-p:hover { transform:translateY(-3px); box-shadow:0 8px 32px rgba(0,212,255,.38); }
+    .btn-o { background:transparent; color:var(--text); border:1px solid var(--border); }
+    .btn-o:hover { border-color:var(--purple); color:var(--purple); transform:translateY(-3px); box-shadow:var(--glow-p); }
+
+    .scroll-hint {
+      position:absolute; bottom:1.8rem; left:50%; transform:translateX(-50%);
+      color:var(--text3); font-size:1.1rem;
+      animation:bounce 2.2s infinite;
+    }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(9px)} }
+
+    @keyframes fadeDown { from{opacity:0;transform:translateY(-18px)} to{opacity:1;transform:none} }
+    @keyframes fadeUp   { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:none} }
+
+    /* ──────────────────────────────────────────────────
+       ABOUT
+    ────────────────────────────────────────────────── */
+    #about { background:var(--bg2); }
+    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+    .about-text p { color:var(--text2); line-height:1.8; margin-bottom:.9rem; font-size:.97rem; }
+    .about-text p strong { color:var(--cyan); font-weight:600; }
+
+    .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .stat {
+      background:var(--card); border:1px solid var(--border); border-radius:14px;
+      padding:1.5rem; text-align:center; position:relative; overflow:hidden;
+      transition:all .3s;
+    }
+    .stat::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:var(--grad); transform:scaleX(0); transition:transform .35s;
+    }
+    .stat:hover { transform:translateY(-5px); box-shadow:var(--glow-c); border-color:rgba(0,212,255,.18); }
+    .stat:hover::before { transform:scaleX(1); }
+    .stat-n {
+      font-size:2.4rem; font-weight:700; line-height:1;
+      background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+      margin-bottom:.25rem;
+    }
+    .stat-l { color:var(--text2); font-size:.78rem; letter-spacing:.4px; }
+
+    /* ──────────────────────────────────────────────────
+       SKILLS
+    ────────────────────────────────────────────────── */
+    .skill-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:1.4rem; margin-top:2.8rem; }
+    .sk {
+      background:var(--card); border:1px solid var(--border); border-radius:16px;
+      padding:1.65rem; transition:all .35s; position:relative; overflow:hidden;
+    }
+    .sk:hover { transform:translateY(-6px); border-color:rgba(0,212,255,.28); box-shadow:0 18px 38px rgba(0,0,0,.28), var(--glow-c); }
+    .sk-icon {
+      width:46px; height:46px; border-radius:12px;
+      display:flex; align-items:center; justify-content:center; font-size:1.25rem; margin-bottom:.9rem;
+    }
+    .sk-name { font-size:.8rem; font-weight:600; color:var(--text3); text-transform:uppercase; letter-spacing:1px; margin-bottom:.9rem; }
+    .tags { display:flex; flex-wrap:wrap; gap:.45rem; }
+    .tag {
+      padding:.28rem .7rem; border-radius:100px; font-size:.78rem;
+      font-weight:500; font-family:var(--fc); transition:transform .2s;
+    }
+    .tag:hover { transform:scale(1.07); }
+    .tc { background:rgba(0,212,255,.1);  color:var(--cyan);   border:1px solid rgba(0,212,255,.2); }
+    .tp { background:rgba(139,92,246,.1); color:var(--purple); border:1px solid rgba(139,92,246,.2); }
+    .tk { background:rgba(236,72,153,.1); color:var(--pink);   border:1px solid rgba(236,72,153,.2); }
+    .ta { background:rgba(245,158,11,.1); color:var(--amber);  border:1px solid rgba(245,158,11,.2); }
+    .tg { background:rgba(16,185,129,.1); color:var(--green);  border:1px solid rgba(16,185,129,.2); }
+
+    /* ──────────────────────────────────────────────────
+       EXPERIENCE
+    ────────────────────────────────────────────────── */
+    #exp { background:var(--bg2); }
+    .exp-wrap {
+      background:var(--card); border:1px solid var(--border); border-radius:20px;
+      padding:2rem; margin-top:2.8rem;
+    }
+    .exp-head {
+      display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap;
+      gap:1rem; margin-bottom:1.8rem;
+    }
+    .exp-co { display:flex; align-items:center; gap:1rem; }
+    .exp-logo {
+      width:52px; height:52px; border-radius:12px; flex-shrink:0;
+      background:linear-gradient(135deg,#ff6b00,#ff9600);
+      display:flex; align-items:center; justify-content:center;
+      font-size:.72rem; font-weight:800; color:#fff; letter-spacing:.5px;
+    }
+    .exp-info h3 { font-size:1.2rem; font-weight:700; }
+    .exp-info .co { color:var(--amber); font-size:.9rem; font-weight:500; margin-top:2px; }
+    .exp-date {
+      display:inline-flex; align-items:center; gap:.4rem;
+      padding:.3rem .85rem;
+      background:rgba(0,212,255,.08); border:1px solid rgba(0,212,255,.2); border-radius:100px;
+      font-size:.78rem; color:var(--cyan); font-family:var(--fc);
+    }
+    .proj-list { display:flex; flex-direction:column; gap:1.4rem; }
+    .proj {
+      background:rgba(0,0,0,.22); border:1px solid var(--border);
+      border-left:3px solid var(--cyan); border-radius:8px; padding:1.2rem;
+      transition:all .3s;
+    }
+    .proj:nth-child(2) { border-left-color:var(--purple); }
+    .proj:nth-child(3) { border-left-color:var(--pink); }
+    .proj:nth-child(4) { border-left-color:var(--amber); }
+    .proj:hover { background:rgba(255,255,255,.03); transform:translateX(5px); }
+    .proj h4 { font-size:.94rem; font-weight:600; margin-bottom:.7rem; }
+    .proj ul { list-style:none; display:flex; flex-direction:column; gap:.45rem; }
+    .proj ul li {
+      padding-left:1.3rem; color:var(--text2); font-size:.87rem; line-height:1.65;
+      position:relative;
+    }
+    .proj ul li::before { content:'→'; position:absolute; left:0; color:var(--cyan); font-size:.75rem; top:2px; }
+    .proj ul li strong { color:var(--text); font-weight:600; }
+    .chips { display:flex; flex-wrap:wrap; gap:.38rem; margin-top:.8rem; }
+    .chip {
+      padding:.2rem .6rem; background:rgba(139,92,246,.1); border:1px solid rgba(139,92,246,.2);
+      border-radius:4px; font-size:.72rem; color:var(--purple); font-family:var(--fc);
+    }
+
+    /* ──────────────────────────────────────────────────
+       PROJECTS
+    ────────────────────────────────────────────────── */
+    .proj-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:1.4rem; margin-top:2.8rem; }
+    .pcard {
+      background:var(--card); border:1px solid var(--border); border-radius:16px;
+      padding:2rem; position:relative; overflow:hidden; transition:all .35s;
+    }
+    .pcard::before {
+      content:''; position:absolute; top:-70px; right:-70px; width:180px; height:180px;
+      border-radius:50%; background:radial-gradient(circle,rgba(0,212,255,.07),transparent 70%);
+      transition:transform .4s;
+    }
+    .pcard:hover::before { transform:scale(1.6); }
+    .pcard:hover { border-color:rgba(0,212,255,.3); transform:translateY(-8px); box-shadow:0 24px 48px rgba(0,0,0,.3), var(--glow-c); }
+    .pcard-num { font-family:var(--fc); font-size:.78rem; color:var(--text3); margin-bottom:.65rem; }
+    .pcard h3 { font-size:1.08rem; font-weight:700; line-height:1.3; margin-bottom:.9rem; }
+    .pcard p { color:var(--text2); font-size:.88rem; line-height:1.7; margin-bottom:1.1rem; }
+    .pcard p strong { color:var(--text); font-weight:600; }
+    .plinks { display:flex; gap:.7rem; margin-top:auto; }
+    .plink {
+      display:inline-flex; align-items:center; gap:.4rem;
+      padding:.38rem .85rem; border-radius:6px; font-size:.8rem; font-weight:500;
+      text-decoration:none; transition:all .25s;
+      background:rgba(255,255,255,.05); color:var(--text2); border:1px solid var(--border);
+    }
+    .plink:hover { background:rgba(255,255,255,.1); color:var(--text); }
+    .pcard-empty {
+      display:flex !important; flex-direction:column; align-items:center; justify-content:center;
+      min-height:220px; border-style:dashed !important; opacity:.4;
+    }
+
+    /* ──────────────────────────────────────────────────
+       EDUCATION
+    ────────────────────────────────────────────────── */
+    #edu { background:var(--bg2); }
+    .edu-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(360px,1fr)); gap:1.4rem; margin-top:2.8rem; }
+    .ecard {
+      background:var(--card); border:1px solid var(--border); border-radius:16px;
+      padding:2rem; position:relative; overflow:hidden; transition:all .35s;
+    }
+    .ecard::after {
+      content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:var(--grad);
+    }
+    .ecard:hover { transform:translateY(-6px); border-color:rgba(139,92,246,.25); box-shadow:var(--glow-p); }
+    .ebadge {
+      display:inline-block; padding:.28rem .75rem; border-radius:100px;
+      font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.5px; margin-bottom:1rem;
+    }
+    .em  { background:rgba(139,92,246,.12); color:var(--purple); border:1px solid rgba(139,92,246,.22); }
+    .eb  { background:rgba(0,212,255,.12);  color:var(--cyan);   border:1px solid rgba(0,212,255,.22); }
+    .ecard h3 { font-size:1.12rem; font-weight:700; margin-bottom:.25rem; }
+    .ecard .deg { color:var(--text2); font-size:.88rem; margin-bottom:.75rem; }
+    .emeta {
+      display:flex; align-items:center; justify-content:space-between;
+      padding-top:.9rem; border-top:1px solid var(--border); margin-top:.9rem;
+    }
+    .eyear { font-family:var(--fc); font-size:.83rem; color:var(--text3); }
+    .ecgpa {
+      font-size:1.05rem; font-weight:700;
+      background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+
+    /* ──────────────────────────────────────────────────
+       CONTACT
+    ────────────────────────────────────────────────── */
+    #contact { text-align:center; }
+    .contact-grid {
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+      gap:1rem; max-width:820px; margin:2.8rem auto 0;
+    }
+    .ccard {
+      background:var(--card); border:1px solid var(--border); border-radius:14px;
+      padding:1.5rem; text-decoration:none; color:var(--text);
+      display:flex; flex-direction:column; align-items:center; gap:.65rem;
+      transition:all .3s;
+    }
+    .ccard i { font-size:1.7rem; transition:transform .3s; }
+    .ccard:hover { transform:translateY(-6px); }
+    .ccard:hover i { transform:scale(1.2) rotate(-5deg); }
+    .ccard .cl { font-size:.72rem; color:var(--text3); text-transform:uppercase; letter-spacing:1px; font-weight:600; }
+    .ccard .cv { font-size:.82rem; color:var(--text2); word-break:break-all; text-align:center; }
+    .cp:hover  { border-color:var(--green);  box-shadow:0 10px 30px rgba(16,185,129,.2); }
+    .cp i      { color:var(--green); }
+    .ce:hover  { border-color:var(--amber);  box-shadow:0 10px 30px rgba(245,158,11,.2); }
+    .ce i      { color:var(--amber); }
+    .cg:hover  { border-color:var(--text2);  box-shadow:0 10px 30px rgba(148,163,184,.15); }
+    .cg i      { color:var(--text2); }
+    .cl2:hover { border-color:#0077b5;        box-shadow:0 10px 30px rgba(0,119,181,.25); }
+    .cl2 i     { color:#0077b5; }
+
+    /* ──────────────────────────────────────────────────
+       FOOTER
+    ────────────────────────────────────────────────── */
+    footer {
+      background:var(--bg2); border-top:1px solid var(--border);
+      padding:1.75rem; text-align:center; color:var(--text3); font-size:.83rem;
+    }
+    footer span { color:var(--cyan); }
+
+    /* ──────────────────────────────────────────────────
+       ACCORDION EXPERIENCE
+    ────────────────────────────────────────────────── */
+    .acc-item { border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:.9rem; transition:border-color .3s; }
+    .acc-item:hover { border-color:rgba(0,212,255,.2); }
+    .acc-head {
+      width:100%; display:flex; align-items:center; justify-content:space-between;
+      padding:1.2rem 1.4rem; background:rgba(0,0,0,.22); border:none; cursor:pointer;
+      gap:1rem; text-align:left; color:var(--text); font-family:var(--ff); transition:background .25s;
+    }
+    .acc-head:hover { background:rgba(255,255,255,.035); }
+    .acc-left { display:flex; align-items:center; gap:.9rem; flex:1; min-width:0; }
+    .acc-icon-w { width:42px; height:42px; border-radius:11px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:1.1rem; }
+    .ic-c { background:rgba(0,212,255,.12); color:var(--cyan); }
+    .ic-p { background:rgba(139,92,246,.12); color:var(--purple); }
+    .ic-k { background:rgba(236,72,153,.12); color:var(--pink); }
+    .ic-a { background:rgba(245,158,11,.12); color:var(--amber); }
+    .acc-tg { flex:1; min-width:0; }
+    .acc-title { font-size:.96rem; font-weight:600; display:block; margin-bottom:.38rem; }
+    .acc-preview { display:flex; flex-wrap:wrap; gap:.3rem; }
+    .acc-toggle {
+      display:inline-flex; align-items:center; gap:.42rem; flex-shrink:0;
+      padding:.38rem .9rem; border-radius:6px; font-size:.78rem; font-weight:600;
+      background:rgba(0,212,255,.09); color:var(--cyan); border:1px solid rgba(0,212,255,.2);
+      transition:all .25s; white-space:nowrap;
+    }
+    .acc-head:hover .acc-toggle { background:rgba(0,212,255,.18); }
+    .acc-arrow { transition:transform .35s; display:inline-block; }
+    .acc-item.open .acc-arrow { transform:rotate(180deg); }
+    .acc-body { max-height:0; overflow:hidden; transition:max-height .55s cubic-bezier(.4,0,.2,1); }
+    .acc-item.open .acc-body { max-height:3200px; }
+    .acc-body-inner { padding:1.5rem; display:flex; flex-direction:column; gap:1.25rem; background:rgba(0,0,0,.15); border-top:1px solid var(--border); }
+    /* detail list */
+    .detail-list { list-style:none; display:flex; flex-direction:column; gap:.72rem; }
+    .detail-list li { position:relative; padding-left:1.4rem; color:var(--text2); font-size:.88rem; line-height:1.72; }
+    .detail-list li::before { content:'▸'; position:absolute; left:0; color:var(--cyan); font-size:.78rem; top:3px; }
+    .detail-list li strong { color:var(--text); font-weight:600; }
+    /* architecture diagram */
+    .arch-wrap { background:rgba(0,0,0,.32); border:1px solid var(--border); border-radius:11px; padding:1.1rem 1.25rem; overflow-x:auto; }
+    .arch-label { font-family:var(--fc); font-size:.7rem; color:var(--text3); text-transform:uppercase; letter-spacing:1.2px; margin-bottom:.85rem; }
+    .arch-flow { display:flex; align-items:center; flex-wrap:wrap; gap:.5rem; }
+    .arch-node { padding:.32rem .8rem; border-radius:7px; font-size:.76rem; font-weight:500; font-family:var(--fc); white-space:nowrap; }
+    .an-c { background:rgba(0,212,255,.1);  color:var(--cyan);   border:1px solid rgba(0,212,255,.22); }
+    .an-p { background:rgba(139,92,246,.1); color:var(--purple); border:1px solid rgba(139,92,246,.22); }
+    .an-k { background:rgba(236,72,153,.1); color:var(--pink);   border:1px solid rgba(236,72,153,.22); }
+    .an-a { background:rgba(245,158,11,.1); color:var(--amber);  border:1px solid rgba(245,158,11,.22); }
+    .an-g { background:rgba(16,185,129,.1); color:var(--green);  border:1px solid rgba(16,185,129,.22); }
+    .arch-arr { color:var(--text3); font-size:.85rem; flex-shrink:0; }
+    .arch-fork { display:flex; flex-direction:column; gap:.45rem; }
+    /* approach tabs */
+    .appr-tabs { display:flex; gap:.45rem; flex-wrap:wrap; margin-bottom:.95rem; }
+    .appr-tab { padding:.36rem .95rem; border-radius:7px; font-size:.8rem; font-weight:500; background:rgba(255,255,255,.045); color:var(--text2); border:1px solid var(--border); cursor:pointer; transition:all .25s; font-family:var(--ff); }
+    .appr-tab.active { background:rgba(0,212,255,.1); color:var(--cyan); border-color:rgba(0,212,255,.3); }
+    .appr-panel { display:none; }
+    .appr-panel.active { display:flex; flex-direction:column; gap:1rem; }
+
+    /* ──────────────────────────────────────────────────
+       PROJECT CARDS V2
+    ────────────────────────────────────────────────── */
+    .pcard-v2 { background:var(--card); border:1px solid var(--border); border-radius:18px; overflow:hidden; transition:all .35s; display:flex; flex-direction:column; }
+    .pcard-v2:hover { border-color:rgba(0,212,255,.3); box-shadow:0 24px 48px rgba(0,0,0,.3),var(--glow-c); transform:translateY(-6px); }
+    .pc-banner { position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; padding:1rem; background:linear-gradient(135deg,rgba(245,158,11,.06),rgba(139,92,246,.1)); }
+    .pc-body { padding:1.6rem; display:flex; flex-direction:column; flex:1; }
+    .pc-cat { font-family:var(--fc); font-size:.72rem; color:var(--text3); margin-bottom:.5rem; }
+    .pc-title { font-size:1.08rem; font-weight:700; line-height:1.35; margin-bottom:.65rem; }
+    .pc-desc { color:var(--text2); font-size:.88rem; line-height:1.72; flex:1; }
+    .pc-toggle-btn { margin-top:1.1rem; display:inline-flex; align-items:center; gap:.45rem; width:fit-content; padding:.42rem 1.05rem; border-radius:7px; font-size:.8rem; font-weight:600; background:rgba(0,212,255,.08); color:var(--cyan); border:1px solid rgba(0,212,255,.18); cursor:pointer; transition:all .25s; font-family:var(--ff); }
+    .pc-toggle-btn:hover { background:rgba(0,212,255,.18); }
+    .pc-toggle-btn .pc-arrow { transition:transform .35s; display:inline-block; }
+    .pcard-v2.pc-open .pc-arrow { transform:rotate(180deg); }
+    .pc-more { max-height:0; overflow:hidden; transition:max-height .55s cubic-bezier(.4,0,.2,1); }
+    .pcard-v2.pc-open .pc-more { max-height:1800px; }
+    .pc-more-inner { padding:.2rem 1.6rem 1.6rem; border-top:1px solid var(--border); display:flex; flex-direction:column; gap:.9rem; }
+
+    /* ──────────────────────────────────────────────────
+       MOBILE
+    ────────────────────────────────────────────────── */
+    @media(max-width:768px){
+      nav { padding:.9rem 1.2rem; }
+      .nav-links { display:none; }
+      .burger { display:block; }
+      .nav-links.open {
+        display:flex; flex-direction:column; gap:0; list-style:none;
+        position:fixed; inset:64px 0 0 0;
+        background:rgba(5,5,15,.97); backdrop-filter:blur(20px);
+        padding:2rem; z-index:999; align-items:flex-start;
+      }
+      .nav-links.open a { font-size:1.2rem; padding:.6rem 0; }
+      .about-grid { grid-template-columns:1fr; gap:2rem; }
+      .stat-grid { grid-template-columns:1fr 1fr; }
+      body { cursor:auto; }
+      #cur, #cur2 { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cur"></div>
+<div id="cur2"></div>
+
+<!-- READ PROGRESS -->
+<div id="progress"></div>
+
+<!-- ════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════ -->
+<nav id="nav">
+  <div class="nav-logo">PS</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#exp">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#edu">Education</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+  <button class="burger" id="burger" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+</nav>
+
+<!-- ════════════════════════════════════════
+     HERO
+════════════════════════════════════════ -->
+<section id="hero">
+  <canvas id="canvas"></canvas>
+  <div class="orb" style="width:550px;height:550px;background:var(--cyan);top:-220px;right:-180px;"></div>
+  <div class="orb" style="width:480px;height:480px;background:var(--purple);bottom:-200px;left:-170px;"></div>
+
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      <span>Available for opportunities &nbsp;·&nbsp; Open to collaborate</span>
+    </div>
+
+    <h1 class="hero-name">
+      <span class="n1">Pemmareddy</span>
+      <span class="n2">Sreevardhan</span>
+    </h1>
+
+    <div class="hero-role">
+      <span>$ </span><span class="typed"></span><span class="blink"></span>
+    </div>
+
+    <p class="hero-desc">
+      Building intelligent systems at the intersection of AI, data engineering, and
+      conversational interfaces. Currently crafting next-gen AI solutions at
+      <strong style="color:var(--amber)">Honeywell</strong>.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#exp"     class="btn btn-p"><i class="fas fa-rocket"></i> View My Work</a>
+      <a href="#contact" class="btn btn-o"><i class="fas fa-paper-plane"></i> Get In Touch</a>
+    </div>
+  </div>
+
+  <div class="scroll-hint"><i class="fas fa-chevron-down"></i></div>
+</section>
+
+<!-- ════════════════════════════════════════
+     ABOUT
+════════════════════════════════════════ -->
+<section id="about">
+  <div class="grid-bg"></div>
+  <div class="container">
+    <div class="about-grid">
+
+      <div class="rvL">
+        <span class="sec-tag">// whoami</span>
+        <h2 class="sec-title">About <span>Me</span></h2>
+        <div class="about-text">
+          <p>I'm a <strong>Data Science & AI engineer</strong> passionate about building intelligent systems that solve real-world problems. Currently pursuing my M.Tech at VIT Chennai while working as a <strong>Data Science Intern at Honeywell</strong>.</p>
+          <p>I specialise in <strong>multi-agent AI architectures</strong>, <strong>RAG pipelines</strong>, and <strong>conversational AI</strong> — with hands-on experience delivering end-to-end solutions from research to production.</p>
+          <p>My approach combines deep technical foundations with a product-focused mindset, ensuring systems are not just technically sound, but genuinely useful.</p>
+        </div>
+      </div>
+
+      <div class="stat-grid rvR">
+        <div class="stat">
+          <div class="stat-n" data-t="9.36" data-d="2">0</div>
+          <div class="stat-l">M.Tech CGPA</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n" data-t="8.99" data-d="2">0</div>
+          <div class="stat-l">B.Tech CGPA</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n" data-t="10" data-d="0">0</div>
+          <div class="stat-l">Months @ Honeywell</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n" data-t="5" data-d="0">0</div>
+          <div class="stat-l">AI Systems Built</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ════════════════════════════════════════
+     SKILLS
+════════════════════════════════════════ -->
+<section id="skills">
+  <div class="container">
+    <div class="rv">
+      <span class="sec-tag">// tech.stack</span>
+      <h2 class="sec-title">Technical <span>Skills</span></h2>
+      <p class="sec-sub">A curated set of technologies I use to build intelligent, scalable AI systems.</p>
+    </div>
+
+    <div class="skill-grid">
+
+      <div class="sk rv" style="transition-delay:.08s">
+        <div class="sk-icon" style="background:rgba(0,212,255,.1)"><i class="fas fa-code" style="color:var(--cyan)"></i></div>
+        <div class="sk-name">Programming & Data Analysis</div>
+        <div class="tags">
+          <span class="tag tc">Python</span>
+          <span class="tag tc">SQL</span>
+          <span class="tag tc">R</span>
+          <span class="tag tc">Pandas</span>
+          <span class="tag tc">NumPy</span>
+        </div>
+      </div>
+
+      <div class="sk rv" style="transition-delay:.14s">
+        <div class="sk-icon" style="background:rgba(139,92,246,.1)"><i class="fas fa-network-wired" style="color:var(--purple)"></i></div>
+        <div class="sk-name">Agent Frameworks</div>
+        <div class="tags">
+          <span class="tag tp">LangGraph</span>
+          <span class="tag tp">Google ADK</span>
+          <span class="tag tp">LangChain</span>
+        </div>
+      </div>
+
+      <div class="sk rv" style="transition-delay:.20s">
+        <div class="sk-icon" style="background:rgba(236,72,153,.1)"><i class="fas fa-brain" style="color:var(--pink)"></i></div>
+        <div class="sk-name">LLMs &amp; Embeddings</div>
+        <div class="tags">
+          <span class="tag tk">Gemini 2.5</span>
+          <span class="tag tk">BGE-M3</span>
+          <span class="tag tk">Qwen-Embedding</span>
+          <span class="tag tk">Phi-3 SLM</span>
+          <span class="tag tk">RAG</span>
+        </div>
+      </div>
+
+      <div class="sk rv" style="transition-delay:.26s">
+        <div class="sk-icon" style="background:rgba(245,158,11,.1)"><i class="fas fa-eye" style="color:var(--amber)"></i></div>
+        <div class="sk-name">Computer Vision</div>
+        <div class="tags">
+          <span class="tag ta">Vision Transformers</span>
+          <span class="tag ta">PaddleOCR</span>
+          <span class="tag ta">DeepSeek-OCR</span>
+          <span class="tag ta">PyTorch</span>
+        </div>
+      </div>
+
+      <div class="sk rv" style="transition-delay:.32s">
+        <div class="sk-icon" style="background:rgba(16,185,129,.1)"><i class="fas fa-database" style="color:var(--green)"></i></div>
+        <div class="sk-name">Databases &amp; Vector Stores</div>
+        <div class="tags">
+          <span class="tag tg">PostgreSQL</span>
+          <span class="tag tg">FAISS</span>
+          <span class="tag tg">Redis</span>
+        </div>
+      </div>
+
+      <div class="sk rv" style="transition-delay:.38s">
+        <div class="sk-icon" style="background:rgba(0,212,255,.1)"><i class="fas fa-cloud" style="color:var(--cyan)"></i></div>
+        <div class="sk-name">Platforms &amp; Tools</div>
+        <div class="tags">
+          <span class="tag tc">Databricks</span>
+          <span class="tag tc">Azure Blob Storage</span>
+          <span class="tag tp">OpenAPI</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ════════════════════════════════════════
+     EXPERIENCE
+════════════════════════════════════════ -->
+<section id="exp">
+  <div class="container">
+    <div class="rv">
+      <span class="sec-tag">// work.history</span>
+      <h2 class="sec-title">Professional <span>Experience</span></h2>
+      <p class="sec-sub">Building production-grade AI systems that solve real engineering challenges.</p>
+    </div>
+
+    <div class="exp-wrap rv">
+
+      <div class="exp-head">
+        <div class="exp-co">
+          <div class="exp-logo">HON</div>
+          <div class="exp-info">
+            <h3>Data Science Intern</h3>
+            <div class="co"><i class="fas fa-building" style="font-size:.78rem;margin-right:4px;"></i>Honeywell</div>
+          </div>
+        </div>
+        <span class="exp-date"><i class="fas fa-calendar-alt"></i> July 2025 – May 2026</span>
+      </div>
+
+      <div class="proj-list">
+
+        <!-- ═══ ACCORDION 1 ═══ -->
+        <div class="acc-item rv" id="acc1">
+          <button class="acc-head" onclick="toggleAcc('acc1')">
+            <div class="acc-left">
+              <div class="acc-icon-w ic-c"><i class="fas fa-robot"></i></div>
+              <div class="acc-tg">
+                <span class="acc-title">AI Assist — HVAC Engineering Toolkit</span>
+                <div class="acc-preview">
+                  <span class="chip">Google ADK</span><span class="chip">LangGraph</span><span class="chip">Gemini 2.5</span><span class="chip">BGE-M3</span><span class="chip">RAG</span>
+                </div>
+              </div>
+            </div>
+            <div class="acc-toggle"><span>Explore</span><i class="fas fa-chevron-down acc-arrow" style="margin-left:.3rem"></i></div>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <!-- SVG architecture banner -->
+              <div style="background:linear-gradient(135deg,rgba(0,212,255,.04),rgba(139,92,246,.08));border:1px solid var(--border);border-radius:12px;padding:1.2rem;overflow-x:auto;">
+                <svg width="100%" viewBox="0 0 700 110" fill="none" xmlns="http://www.w3.org/2000/svg" style="min-width:560px;display:block">
+                  <!-- User -->
+                  <rect x="8" y="38" width="72" height="34" rx="7" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.3)"/>
+                  <text x="44" y="57" text-anchor="middle" font-size="9.5" fill="rgba(16,185,129,.9)" font-family="monospace" font-weight="600">User Query</text>
+                  <!-- arrow -->
+                  <line x1="82" y1="55" x2="108" y2="55" stroke="rgba(255,255,255,.2)" stroke-width="1.4"/>
+                  <polygon points="106,51 112,55 106,59" fill="rgba(255,255,255,.3)"/>
+                  <!-- LangGraph -->
+                  <rect x="112" y="30" width="110" height="50" rx="8" fill="rgba(139,92,246,.1)" stroke="rgba(139,92,246,.35)"/>
+                  <text x="167" y="51" text-anchor="middle" font-size="9" fill="rgba(139,92,246,.9)" font-family="monospace" font-weight="700">LangGraph</text>
+                  <text x="167" y="64" text-anchor="middle" font-size="8" fill="rgba(139,92,246,.65)" font-family="monospace">Orchestrator</text>
+                  <!-- fork arrows -->
+                  <line x1="222" y1="45" x2="256" y2="30" stroke="rgba(255,255,255,.2)" stroke-width="1.3"/>
+                  <line x1="222" y1="65" x2="256" y2="80" stroke="rgba(255,255,255,.2)" stroke-width="1.3"/>
+                  <!-- KB Agent -->
+                  <rect x="258" y="14" width="90" height="32" rx="6" fill="rgba(0,212,255,.1)" stroke="rgba(0,212,255,.3)"/>
+                  <text x="303" y="34" text-anchor="middle" font-size="9" fill="rgba(0,212,255,.9)" font-family="monospace" font-weight="600">KB_Agent</text>
+                  <!-- HVAC Agent -->
+                  <rect x="258" y="64" width="90" height="32" rx="6" fill="rgba(236,72,153,.1)" stroke="rgba(236,72,153,.3)"/>
+                  <text x="303" y="84" text-anchor="middle" font-size="9" fill="rgba(236,72,153,.9)" font-family="monospace" font-weight="600">HVAC_Agent</text>
+                  <!-- arrow KB -->
+                  <line x1="350" y1="30" x2="382" y2="30" stroke="rgba(255,255,255,.2)" stroke-width="1.3"/>
+                  <polygon points="380,26 386,30 380,34" fill="rgba(255,255,255,.3)"/>
+                  <!-- BGE-M3 -->
+                  <rect x="386" y="14" width="110" height="32" rx="6" fill="rgba(0,212,255,.08)" stroke="rgba(0,212,255,.22)"/>
+                  <text x="441" y="34" text-anchor="middle" font-size="8.5" fill="rgba(0,212,255,.8)" font-family="monospace">BGE-M3 + PostgreSQL</text>
+                  <!-- arrow HVAC -->
+                  <line x1="350" y1="80" x2="382" y2="80" stroke="rgba(255,255,255,.2)" stroke-width="1.3"/>
+                  <polygon points="380,76 386,80 380,84" fill="rgba(255,255,255,.3)"/>
+                  <!-- Tools -->
+                  <rect x="386" y="64" width="110" height="32" rx="6" fill="rgba(236,72,153,.08)" stroke="rgba(236,72,153,.22)"/>
+                  <text x="441" y="84" text-anchor="middle" font-size="8.5" fill="rgba(236,72,153,.8)" font-family="monospace">Gemini 2.5 + 8 Tools</text>
+                  <!-- merge arrow -->
+                  <line x1="498" y1="30" x2="522" y2="55" stroke="rgba(255,255,255,.15)" stroke-width="1.2"/>
+                  <line x1="498" y1="80" x2="522" y2="55" stroke="rgba(255,255,255,.15)" stroke-width="1.2"/>
+                  <!-- Redis -->
+                  <rect x="524" y="38" width="70" height="34" rx="7" fill="rgba(245,158,11,.1)" stroke="rgba(245,158,11,.3)"/>
+                  <text x="559" y="52" text-anchor="middle" font-size="8.5" fill="rgba(245,158,11,.9)" font-family="monospace">Redis</text>
+                  <text x="559" y="64" text-anchor="middle" font-size="7.5" fill="rgba(245,158,11,.6)" font-family="monospace">Session</text>
+                  <!-- final arrow -->
+                  <line x1="596" y1="55" x2="622" y2="55" stroke="rgba(255,255,255,.2)" stroke-width="1.4"/>
+                  <polygon points="620,51 626,55 620,59" fill="rgba(255,255,255,.3)"/>
+                  <!-- Response -->
+                  <rect x="626" y="38" width="66" height="34" rx="7" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.3)"/>
+                  <text x="659" y="52" text-anchor="middle" font-size="8.5" fill="rgba(16,185,129,.85)" font-family="monospace">Response</text>
+                  <text x="659" y="64" text-anchor="middle" font-size="7.5" fill="rgba(16,185,129,.55)" font-family="monospace">+ Citations</text>
+                  <!-- label -->
+                  <text x="350" y="105" text-anchor="middle" font-size="8" fill="rgba(255,255,255,.15)" font-family="monospace" letter-spacing="1">MULTI-AGENT RAG ARCHITECTURE</text>
+                </svg>
+              </div>
+              <ul class="detail-list">
+                <li>Architected a <strong>dual-agent conversational AI system</strong> for HVAC engineering queries using Google ADK. The KB_Agent handles knowledge-base retrieval while the Orchestrator_Agent routes queries intelligently across 8 specialised tools — search, filter, classify, summarise, extract citations, and domain-specific operations.</li>
+                <li>Implemented a <strong>hybrid retrieval RAG pipeline</strong>: combines 1024-dim BGE-M3 semantic search with BM25-style keyword retrieval for high-recall document matching, with automatic citation extraction and page-level source attribution from HVAC technical PDFs.</li>
+                <li>Built a <strong>multimodal PDF page classifier</strong> using Gemini 2.5 that analyses both text and visual content to categorise pages as floor plans, wiring diagrams, schedule tables, or specifications — enabling structured extraction from complex 200+ page submittal packages.</li>
+                <li>Designed two <strong>ETL pipelines with cosine similarity search</strong>: one ingesting HVAC ontology CSV data into PostgreSQL (enabling chatbot queries when users upload/modify project data), another vectorising SOP control logic sequences for semantic retrieval of reusable patterns from past projects.</li>
+                <li>Migrated from Google ADK to a <strong>LangGraph StateGraph orchestrator</strong> with dual graphs (kb_agent_graph + hvac_agent_graph), parallel tool execution via ThreadPoolExecutor, multi-label query classification, clarification routing for ambiguous queries, and Redis-backed session checkpointing for persistent conversation context across sessions.</li>
+              </ul>
+              <div class="chips">
+                <span class="chip">Google ADK</span><span class="chip">LangGraph</span><span class="chip">Gemini 2.5</span><span class="chip">BGE-M3</span><span class="chip">PostgreSQL</span><span class="chip">Redis</span><span class="chip">RAG</span><span class="chip">ThreadPoolExecutor</span><span class="chip">Hybrid Retrieval</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ ACCORDION 2 ═══ -->
+        <div class="acc-item rv" id="acc2" style="transition-delay:.07s">
+          <button class="acc-head" onclick="toggleAcc('acc2')">
+            <div class="acc-left">
+              <div class="acc-icon-w ic-p"><i class="fas fa-building"></i></div>
+              <div class="acc-tg">
+                <span class="acc-title">Conversational AI Tools for BMS — NPI Team</span>
+                <div class="acc-preview">
+                  <span class="chip">OpenAPI</span><span class="chip">SQL</span><span class="chip">BMS</span><span class="chip">NLP</span><span class="chip">Entity Extraction</span>
+                </div>
+              </div>
+            </div>
+            <div class="acc-toggle"><span>Explore</span><i class="fas fa-chevron-down acc-arrow" style="margin-left:.3rem"></i></div>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <!-- SVG BMS diagram -->
+              <div style="background:linear-gradient(135deg,rgba(139,92,246,.04),rgba(0,212,255,.07));border:1px solid var(--border);border-radius:12px;padding:1.2rem;overflow-x:auto;">
+                <svg width="100%" viewBox="0 0 640 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="min-width:500px;display:block">
+                  <rect x="8" y="33" width="90" height="34" rx="7" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.3)"/>
+                  <text x="53" y="48" text-anchor="middle" font-size="9" fill="rgba(16,185,129,.9)" font-family="monospace" font-weight="600">NL Query</text>
+                  <text x="53" y="60" text-anchor="middle" font-size="8" fill="rgba(16,185,129,.55)" font-family="monospace">User</text>
+                  <line x1="100" y1="50" x2="128" y2="50" stroke="rgba(255,255,255,.2)" stroke-width="1.4"/>
+                  <polygon points="126,46 132,50 126,54" fill="rgba(255,255,255,.3)"/>
+                  <rect x="132" y="28" width="110" height="44" rx="8" fill="rgba(139,92,246,.1)" stroke="rgba(139,92,246,.35)"/>
+                  <text x="187" y="47" text-anchor="middle" font-size="9.5" fill="rgba(139,92,246,.9)" font-family="monospace" font-weight="700">MA Platform</text>
+                  <text x="187" y="62" text-anchor="middle" font-size="8" fill="rgba(139,92,246,.6)" font-family="monospace">OpenAPI Router</text>
+                  <line x1="244" y1="42" x2="275" y2="28" stroke="rgba(255,255,255,.2)" stroke-width="1.3"/>
+                  <line x1="244" y1="58" x2="275" y2="72" stroke="rgba(255,255,255,.2)" stroke-width="1.3"/>
+                  <rect x="278" y="12" width="118" height="32" rx="6" fill="rgba(0,212,255,.1)" stroke="rgba(0,212,255,.3)"/>
+                  <text x="337" y="25" text-anchor="middle" font-size="8.5" fill="rgba(0,212,255,.9)" font-family="monospace" font-weight="600">Live Sensor Tool</text>
+                  <text x="337" y="37" text-anchor="middle" font-size="7.5" fill="rgba(0,212,255,.6)" font-family="monospace">Entity Extraction + NLP</text>
+                  <rect x="278" y="56" width="118" height="32" rx="6" fill="rgba(245,158,11,.1)" stroke="rgba(245,158,11,.3)"/>
+                  <text x="337" y="69" text-anchor="middle" font-size="8.5" fill="rgba(245,158,11,.9)" font-family="monospace" font-weight="600">SQL Query Tool</text>
+                  <text x="337" y="81" text-anchor="middle" font-size="7.5" fill="rgba(245,158,11,.6)" font-family="monospace">Auto SQL Generation</text>
+                  <line x1="398" y1="28" x2="428" y2="28" stroke="rgba(255,255,255,.15)" stroke-width="1.3"/>
+                  <line x1="398" y1="72" x2="428" y2="72" stroke="rgba(255,255,255,.15)" stroke-width="1.3"/>
+                  <rect x="430" y="14" width="96" height="32" rx="6" fill="rgba(0,212,255,.07)" stroke="rgba(0,212,255,.2)"/>
+                  <text x="478" y="34" text-anchor="middle" font-size="8.5" fill="rgba(0,212,255,.75)" font-family="monospace">BMS Real-time API</text>
+                  <rect x="430" y="56" width="96" height="32" rx="6" fill="rgba(245,158,11,.07)" stroke="rgba(245,158,11,.2)"/>
+                  <text x="478" y="76" text-anchor="middle" font-size="8.5" fill="rgba(245,158,11,.75)" font-family="monospace">BMS Database</text>
+                  <line x1="528" y1="30" x2="556" y2="50" stroke="rgba(255,255,255,.12)" stroke-width="1.2"/>
+                  <line x1="528" y1="72" x2="556" y2="50" stroke="rgba(255,255,255,.12)" stroke-width="1.2"/>
+                  <rect x="558" y="33" width="74" height="34" rx="7" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.3)"/>
+                  <text x="595" y="48" text-anchor="middle" font-size="8.5" fill="rgba(16,185,129,.9)" font-family="monospace">Response</text>
+                  <text x="595" y="60" text-anchor="middle" font-size="7.5" fill="rgba(16,185,129,.55)" font-family="monospace">In-Context</text>
+                  <text x="320" y="96" text-anchor="middle" font-size="8" fill="rgba(255,255,255,.13)" font-family="monospace" letter-spacing="1">BMS CONVERSATIONAL AI — TOOL INTEGRATION</text>
+                </svg>
+              </div>
+              <ul class="detail-list">
+                <li>Developed two production API tools for Honeywell's <strong>MA (Multi-Agent) conversational AI platform</strong> targeting Building Management Systems — enabling facility operators to query live building data and execute analytics entirely in plain English without any SQL or domain knowledge.</li>
+                <li>The <strong>Live Sensor Data Tool</strong> uses NLP-based entity extraction to parse structured information from natural language queries — identifying sensor IDs, room names, floor identifiers, time windows, and unit preferences — then routes to the appropriate BMS data endpoint with full context preservation across multi-turn conversations.</li>
+                <li>The <strong>SQL Query Tool</strong> auto-generates syntactically correct, optimised SQL from natural language, targeting BMS relational tables spanning spatial elements (zones, floors, buildings), physical controllers, and thousands of live sensor data points. Handles complex multi-table JOINs, aggregations, and time-series window functions.</li>
+                <li>Authored <strong>OpenAPI 3.0 specifications</strong> with meticulously crafted tool descriptions and embedded disambiguation instructions — enabling the AI orchestrator to autonomously select the correct tool without human intervention or explicit tool-selection prompts.</li>
+                <li>Designed with <strong>context-preserving MA routing</strong>: conversation state threads across tool calls so follow-up queries like "now filter by floor 3" correctly reference the prior query's entities without re-specifying.</li>
+              </ul>
+              <div class="chips">
+                <span class="chip">OpenAPI 3.0</span><span class="chip">SQL</span><span class="chip">BMS</span><span class="chip">NLP</span><span class="chip">Entity Extraction</span><span class="chip">REST APIs</span><span class="chip">MA Platform</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ ACCORDION 3 ═══ -->
+        <div class="acc-item rv" id="acc3" style="transition-delay:.14s">
+          <button class="acc-head" onclick="toggleAcc('acc3')">
+            <div class="acc-left">
+              <div class="acc-icon-w ic-k"><i class="fas fa-table"></i></div>
+              <div class="acc-tg">
+                <span class="acc-title">Excel / CSV Analytics with SLM — 3 Approaches</span>
+                <div class="acc-preview">
+                  <span class="chip">Phi-3 SLM</span><span class="chip">LangChain</span><span class="chip">LoRA Fine-tuning</span><span class="chip">FAISS</span><span class="chip">Pandas</span>
+                </div>
+              </div>
+            </div>
+            <div class="acc-toggle"><span>Explore</span><i class="fas fa-chevron-down acc-arrow" style="margin-left:.3rem"></i></div>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <p style="color:var(--text2);font-size:.88rem;line-height:1.75;">Built and compared <strong style="color:var(--text)">three distinct AI-powered approaches</strong> for enabling natural language Q&amp;A over business Excel/CSV data — each offering different trade-offs in accuracy, latency, context-window usage, and domain adaptability.</p>
+              <div class="appr-tabs">
+                <button class="appr-tab active" onclick="switchTab(this,'appr1','acc3')"><i class="fas fa-robot" style="margin-right:.35rem;font-size:.75rem"></i>Approach 1: Agent + RAG</button>
+                <button class="appr-tab" onclick="switchTab(this,'appr2','acc3')"><i class="fas fa-cogs" style="margin-right:.35rem;font-size:.75rem"></i>Approach 2: Custom Pipeline</button>
+                <button class="appr-tab" onclick="switchTab(this,'appr3','acc3')"><i class="fas fa-brain" style="margin-right:.35rem;font-size:.75rem"></i>Approach 3: SLM Fine-tuning</button>
+              </div>
+              <div class="appr-panel active" id="appr1">
+                <ul class="detail-list">
+                  <li>Uses <strong>Phi-3 SLM</strong> as the core reasoning engine with LangChain's <code style="background:rgba(0,212,255,.08);color:var(--cyan);padding:1px 6px;border-radius:3px;font-size:.81rem;">create_pandas_dataframe_agent</code> for tabular analytics — the agent generates Python/pandas code, executes it, and translates results to natural language.</li>
+                  <li>Integrated a <strong>FAISS vector store</strong> with Qwen-Embedding-0.6B encoding column descriptions, data dictionaries, and domain metadata — bridging ambiguous user terms to actual column names via semantic similarity.</li>
+                  <li>Phi-3 acts as a <strong>smart query router</strong>: computation-heavy queries ("total sales by region", "top 10 products by margin") go to the pandas agent; schema/definition questions go to the RAG tool — dynamically selecting the best path per intent.</li>
+                  <li>Handles multi-step reasoning chains: the pandas agent iteratively generates code → executes safely → inspects output → self-corrects if needed → formats the final answer in plain business language.</li>
+                </ul>
+                <div class="arch-wrap">
+                  <div class="arch-label">Approach 1 Flow</div>
+                  <div class="arch-flow">
+                    <div class="arch-node an-g">NL Query</div>
+                    <span class="arch-arr">→</span>
+                    <div class="arch-node an-k">Phi-3 SLM Router</div>
+                    <span class="arch-arr">→</span>
+                    <div class="arch-fork">
+                      <div class="arch-node an-c">LangChain Pandas Agent</div>
+                      <div class="arch-node an-p">FAISS + Qwen RAG</div>
+                    </div>
+                    <span class="arch-arr">→</span>
+                    <div class="arch-node an-g">Business Answer</div>
+                  </div>
+                </div>
+              </div>
+              <div class="appr-panel" id="appr2">
+                <ul class="detail-list">
+                  <li>Built a fully <strong>custom pipeline</strong> without relying on LangChain agents — giving precise control over execution, error handling, and latency, designed for production reliability in enterprise environments.</li>
+                  <li><strong>Advanced column aliasing system</strong>: maintains a mapping of 200+ natural language expressions to actual column names (e.g., "revenue" → "Net_Sales_USD", "region" → "Territory_Code") — covering business jargon, abbreviations, synonyms, and multilingual terms.</li>
+                  <li><strong>Fuzzy matching</strong> (RapidFuzz library): resolves user typos and partial matches against column names and categorical values — making the system resilient to messy, real-world queries from non-technical business users.</li>
+                  <li><strong>Safe code execution</strong>: Phi-3 SLM generates pandas code which undergoes AST (Abstract Syntax Tree) parsing and namespace restriction before execution — preventing any code injection, accidental file I/O, or silent data corruption.</li>
+                  <li>Benchmarked vs. Approach 1: <strong>+18% accuracy on domain-specific terminology</strong>, 2× faster average query execution, but requires a one-time aliasing setup per new dataset.</li>
+                </ul>
+                <div class="arch-wrap">
+                  <div class="arch-label">Approach 2 Flow</div>
+                  <div class="arch-flow">
+                    <div class="arch-node an-g">NL Query</div>
+                    <span class="arch-arr">→</span>
+                    <div class="arch-node an-a">Alias + Fuzzy Resolver</div>
+                    <span class="arch-arr">→</span>
+                    <div class="arch-node an-k">Phi-3 → Pandas Code</div>
+                    <span class="arch-arr">→</span>
+                    <div class="arch-node an-p">AST Validation</div>
+                    <span class="arch-arr">→</span>
+                    <div class="arch-node an-g">Safe Exec → Answer</div>
+                  </div>
+                </div>
+              </div>
+              <div class="appr-panel" id="appr3">
+                <ul class="detail-list">
+                  <li><strong>Data synthesis pipeline</strong>: extracted column names, dtypes, sample values, and business context from real CSV files, then used Gemini as a teacher LLM to synthesise 2,000+ diverse (natural language question → pandas code) pairs — covering aggregations, filters, group-bys, joins, time-series, and ranking operations.</li>
+                  <li>Applied <strong>LoRA (Low-Rank Adaptation)</strong> to Phi-3-mini: r=16, alpha=32, targeting the attention projection matrices (q_proj, v_proj) — adapting domain knowledge with fewer than 1% of total model weights trainable, enabling fast fine-tuning on a single GPU.</li>
+                  <li>Fine-tuned on a <strong>question → pandas code generation</strong> task using causal language modelling objective. The model learns column naming conventions, domain vocabulary, and typical query patterns specific to the business dataset schema.</li>
+                  <li>Results: <strong>40% reduction in prompt token count</strong> (no need for few-shot examples in context), <strong>+22% accuracy on domain-specific queries</strong> vs. zero-shot Phi-3 baseline, consistent output formatting, and faster inference due to eliminated in-context examples.</li>
+                  <li>Key insight: training on <strong>code generation (not just Q&amp;A)</strong> produces a model that genuinely understands the data schema, making it robust to unseen column combinations and novel aggregation requests.</li>
+                </ul>
+                <div class="arch-wrap">
+                  <div class="arch-label">Approach 3 — Fine-tuning Pipeline</div>
+                  <div class="arch-flow" style="flex-wrap:wrap">
+                    <div class="arch-node an-a">CSV + Schema Context</div>
+                    <span class="arch-arr">→</span>
+                    <div class="arch-node an-p">Gemini Teacher LLM</div>
+                    <span class="arch-arr">→</span>
+                    <div class="arch-node an-c">2K+ Q→Code Pairs</div>
+                    <span class="arch-arr">→</span>
+                    <div class="arch-node an-k">LoRA Fine-tune Phi-3</div>
+                    <span class="arch-arr">→</span>
+                    <div class="arch-node an-g">Domain-Adapted SLM</div>
+                    <span class="arch-arr">→</span>
+                    <div class="arch-node an-g">NL → Pandas Code</div>
+                  </div>
+                </div>
+              </div>
+              <div class="chips">
+                <span class="chip">Phi-3 SLM</span><span class="chip">LoRA</span><span class="chip">LangChain</span><span class="chip">FAISS</span><span class="chip">Qwen-Embedding</span><span class="chip">Pandas</span><span class="chip">RapidFuzz</span><span class="chip">Gemini</span><span class="chip">AST Validation</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ ACCORDION 4 ═══ -->
+        <div class="acc-item rv" id="acc4" style="transition-delay:.21s">
+          <button class="acc-head" onclick="toggleAcc('acc4')">
+            <div class="acc-left">
+              <div class="acc-icon-w ic-a"><i class="fas fa-file-alt"></i></div>
+              <div class="acc-tg">
+                <span class="acc-title">Document AI: OCR Architecture Exploration</span>
+                <div class="acc-preview">
+                  <span class="chip">PaddleOCR</span><span class="chip">DeepSeek-OCR</span><span class="chip">Document AI</span><span class="chip">ViT</span>
+                </div>
+              </div>
+            </div>
+            <div class="acc-toggle"><span>Explore</span><i class="fas fa-chevron-down acc-arrow" style="margin-left:.3rem"></i></div>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <!-- OCR SVG -->
+              <div style="background:linear-gradient(135deg,rgba(245,158,11,.04),rgba(139,92,246,.07));border:1px solid var(--border);border-radius:12px;padding:1.2rem;overflow-x:auto;">
+                <svg width="100%" viewBox="0 0 680 116" fill="none" xmlns="http://www.w3.org/2000/svg" style="min-width:540px;display:block">
+                  <!-- Document icon -->
+                  <rect x="8" y="30" width="52" height="56" rx="5" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.15)"/>
+                  <line x1="18" y1="46" x2="50" y2="46" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
+                  <line x1="18" y1="54" x2="50" y2="54" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+                  <line x1="18" y1="62" x2="40" y2="62" stroke="rgba(255,255,255,.1)" stroke-width="1.5"/>
+                  <text x="34" y="97" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,.25)" font-family="monospace">Input Doc</text>
+                  <!-- PaddleOCR branch label -->
+                  <text x="190" y="16" text-anchor="middle" font-size="8" fill="rgba(0,212,255,.5)" font-family="monospace" letter-spacing=".5">PADDLEOCR PIPELINE</text>
+                  <line x1="62" y1="46" x2="92" y2="46" stroke="rgba(255,255,255,.18)" stroke-width="1.3"/>
+                  <polygon points="90,42 96,46 90,50" fill="rgba(255,255,255,.25)"/>
+                  <rect x="97" y="32" width="78" height="28" rx="6" fill="rgba(0,212,255,.1)" stroke="rgba(0,212,255,.3)"/>
+                  <text x="136" y="46" text-anchor="middle" font-size="8.5" fill="rgba(0,212,255,.9)" font-family="monospace" font-weight="600">DBNet</text>
+                  <text x="136" y="57" text-anchor="middle" font-size="7.5" fill="rgba(0,212,255,.55)" font-family="monospace">Detection</text>
+                  <line x1="177" y1="46" x2="205" y2="46" stroke="rgba(255,255,255,.18)" stroke-width="1.3"/>
+                  <polygon points="203,42 209,46 203,50" fill="rgba(255,255,255,.25)"/>
+                  <rect x="210" y="32" width="78" height="28" rx="6" fill="rgba(139,92,246,.1)" stroke="rgba(139,92,246,.3)"/>
+                  <text x="249" y="46" text-anchor="middle" font-size="8.5" fill="rgba(139,92,246,.9)" font-family="monospace" font-weight="600">SVTR</text>
+                  <text x="249" y="57" text-anchor="middle" font-size="7.5" fill="rgba(139,92,246,.55)" font-family="monospace">Recognition</text>
+                  <line x1="290" y1="46" x2="318" y2="46" stroke="rgba(255,255,255,.18)" stroke-width="1.3"/>
+                  <polygon points="316,42 322,46 316,50" fill="rgba(255,255,255,.25)"/>
+                  <rect x="323" y="32" width="90" height="28" rx="6" fill="rgba(236,72,153,.1)" stroke="rgba(236,72,153,.3)"/>
+                  <text x="368" y="46" text-anchor="middle" font-size="8.5" fill="rgba(236,72,153,.9)" font-family="monospace" font-weight="600">PP-Structure</text>
+                  <text x="368" y="57" text-anchor="middle" font-size="7.5" fill="rgba(236,72,153,.55)" font-family="monospace">Layout Analysis</text>
+                  <!-- DeepSeek branch label -->
+                  <text x="190" y="80" text-anchor="middle" font-size="8" fill="rgba(245,158,11,.5)" font-family="monospace" letter-spacing=".5">DEEPSEEK-OCR PIPELINE</text>
+                  <line x1="62" y1="58" x2="92" y2="90" stroke="rgba(255,255,255,.1)" stroke-width="1.1"/>
+                  <rect x="97" y="82" width="78" height="26" rx="6" fill="rgba(245,158,11,.1)" stroke="rgba(245,158,11,.3)"/>
+                  <text x="136" y="98" text-anchor="middle" font-size="8.5" fill="rgba(245,158,11,.9)" font-family="monospace" font-weight="600">ViT Encoder</text>
+                  <line x1="177" y1="95" x2="205" y2="95" stroke="rgba(255,255,255,.15)" stroke-width="1.2"/>
+                  <polygon points="203,91 209,95 203,99" fill="rgba(255,255,255,.22)"/>
+                  <rect x="210" y="82" width="78" height="26" rx="6" fill="rgba(139,92,246,.1)" stroke="rgba(139,92,246,.28)"/>
+                  <text x="249" y="98" text-anchor="middle" font-size="8.5" fill="rgba(139,92,246,.85)" font-family="monospace" font-weight="600">Cross-Attn</text>
+                  <line x1="290" y1="95" x2="318" y2="95" stroke="rgba(255,255,255,.15)" stroke-width="1.2"/>
+                  <polygon points="316,91 322,95 316,99" fill="rgba(255,255,255,.22)"/>
+                  <rect x="323" y="82" width="90" height="26" rx="6" fill="rgba(236,72,153,.1)" stroke="rgba(236,72,153,.28)"/>
+                  <text x="368" y="98" text-anchor="middle" font-size="8.5" fill="rgba(236,72,153,.85)" font-family="monospace" font-weight="600">Text Decoder</text>
+                  <!-- merge + output -->
+                  <line x1="415" y1="46" x2="448" y2="62" stroke="rgba(255,255,255,.12)" stroke-width="1.1"/>
+                  <line x1="415" y1="95" x2="448" y2="75" stroke="rgba(255,255,255,.12)" stroke-width="1.1"/>
+                  <rect x="452" y="52" width="90" height="32" rx="7" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.3)"/>
+                  <text x="497" y="66" text-anchor="middle" font-size="9" fill="rgba(16,185,129,.9)" font-family="monospace" font-weight="600">Structured</text>
+                  <text x="497" y="78" text-anchor="middle" font-size="9" fill="rgba(16,185,129,.9)" font-family="monospace" font-weight="600">JSON Output</text>
+                  <text x="340" y="114" text-anchor="middle" font-size="7.5" fill="rgba(255,255,255,.12)" font-family="monospace" letter-spacing="1">OCR ARCHITECTURE COMPARISON</text>
+                </svg>
+              </div>
+              <ul class="detail-list">
+                <li>Conducted deep architectural analysis of <strong>PaddleOCR</strong>: studied DBNet (Differentiable Binarisation) for robust text detection under varying illumination, SVTR/CRNN for high-accuracy text recognition, and PP-Structure for layout-aware document understanding including table structure parsing and logical reading-order reconstruction.</li>
+                <li>Analysed <strong>DeepSeek-OCR's vision-language architecture</strong>: a ViT-based visual encoder feeds into cross-attention layers that bridge visual feature space and language embedding space, followed by an autoregressive text decoder that natively handles both text transcription and spatial layout in a unified forward pass.</li>
+                <li>Benchmarked both systems on HVAC document types — DeepSeek-OCR excelled on dense layout understanding (equipment schedules, multi-column tables) while PaddleOCR offered superior per-character bounding-box precision and 3× faster inference for large-batch document processing.</li>
+                <li>Designed <strong>custom region-detection prompt strategies</strong> for DeepSeek-OCR to improve extraction of dimension annotations, unit callouts, tag numbers, and terminal designations from complex HVAC engineering drawings.</li>
+                <li>Generated <strong>annotated output datasets</strong> (bounding boxes + transcribed text + table structure) from processed HVAC documents, creating structured training data for downstream classification and information extraction models.</li>
+              </ul>
+              <div class="chips">
+                <span class="chip">PaddleOCR</span><span class="chip">DeepSeek-OCR</span><span class="chip">DBNet</span><span class="chip">SVTR</span><span class="chip">PP-Structure</span><span class="chip">ViT</span><span class="chip">Document AI</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /proj-list -->
+    </div><!-- /exp-wrap -->
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ════════════════════════════════════════
+     PROJECTS
+════════════════════════════════════════ -->
+<section id="projects">
+  <div class="container">
+    <div class="rv">
+      <span class="sec-tag">// personal.projects</span>
+      <h2 class="sec-title">Featured <span>Projects</span></h2>
+      <p class="sec-sub">Independent research pushing the boundaries of AI and computer vision.</p>
+    </div>
+
+    <div class="proj-grid">
+
+      <!-- VisTransformer Card -->
+      <div class="pcard-v2 rv" style="transition-delay:.08s">
+        <div class="pc-banner" style="min-height:140px;">
+          <svg width="100%" viewBox="0 0 420 130" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:420px">
+            <!-- Eye / Retina metaphor -->
+            <ellipse cx="210" cy="65" rx="160" ry="52" fill="none" stroke="rgba(245,158,11,.3)" stroke-width="1.5"/>
+            <ellipse cx="210" cy="65" rx="110" ry="36" fill="none" stroke="rgba(245,158,11,.2)" stroke-width="1"/>
+            <circle cx="210" cy="65" r="20" fill="rgba(245,158,11,.12)" stroke="rgba(245,158,11,.5)" stroke-width="1.5"/>
+            <circle cx="210" cy="65" r="10" fill="rgba(245,158,11,.2)" stroke="rgba(245,158,11,.6)" stroke-width="1.5"/>
+            <!-- Patch grid lines -->
+            <line x1="150" y1="33" x2="150" y2="97" stroke="rgba(0,212,255,.12)" stroke-width=".8" stroke-dasharray="3,3"/>
+            <line x1="180" y1="29" x2="180" y2="101" stroke="rgba(0,212,255,.1)" stroke-width=".8" stroke-dasharray="3,3"/>
+            <line x1="240" y1="29" x2="240" y2="101" stroke="rgba(0,212,255,.1)" stroke-width=".8" stroke-dasharray="3,3"/>
+            <line x1="270" y1="33" x2="270" y2="97" stroke="rgba(0,212,255,.12)" stroke-width=".8" stroke-dasharray="3,3"/>
+            <line x1="80" y1="55" x2="340" y2="55" stroke="rgba(0,212,255,.1)" stroke-width=".8" stroke-dasharray="3,3"/>
+            <line x1="60" y1="65" x2="360" y2="65" stroke="rgba(0,212,255,.07)" stroke-width=".8" stroke-dasharray="3,3"/>
+            <line x1="80" y1="75" x2="340" y2="75" stroke="rgba(0,212,255,.1)" stroke-width=".8" stroke-dasharray="3,3"/>
+            <!-- OCT slice lines -->
+            <rect x="130" y="45" width="40" height="40" rx="4" fill="rgba(139,92,246,.08)" stroke="rgba(139,92,246,.3)" stroke-width="1"/>
+            <rect x="250" y="45" width="40" height="40" rx="4" fill="rgba(0,212,255,.06)" stroke="rgba(0,212,255,.25)" stroke-width="1"/>
+            <!-- ViT label -->
+            <text x="210" y="120" text-anchor="middle" font-size="9.5" fill="rgba(245,158,11,.4)" font-family="monospace" letter-spacing="2" font-weight="600">VISION TRANSFORMER · OCT CLASSIFICATION</text>
+          </svg>
+        </div>
+        <div class="pc-body">
+          <div class="pc-cat">01 &nbsp;/&nbsp; Research · Medical AI</div>
+          <div class="pc-title">Vision Transformer with ROI-Based Patch Fusion for OCT Classification</div>
+          <div class="pc-desc">A ViT-based deep learning system detecting <strong>Diabetic Macular Edema</strong> from retinal OCT scans, outperforming CNN baselines on Kaggle and clinical datasets.</div>
+          <div class="tags" style="margin-top:.8rem">
+            <span class="tag ta">PyTorch</span><span class="tag ta">ViT</span><span class="tag ta">Medical Imaging</span><span class="tag ta">OCT</span>
+          </div>
+          <button class="pc-toggle-btn" onclick="togglePCard(this)"><i class="fas fa-microscope" style="font-size:.8rem"></i> Deep Dive <i class="fas fa-chevron-down pc-arrow"></i></button>
+        </div>
+        <div class="pc-more">
+          <div class="pc-more-inner">
+            <!-- ViT architecture SVG -->
+            <div style="background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:10px;padding:1rem;overflow-x:auto;">
+              <svg width="100%" viewBox="0 0 620 90" fill="none" xmlns="http://www.w3.org/2000/svg" style="min-width:500px;display:block">
+                <rect x="4" y="28" width="66" height="34" rx="6" fill="rgba(245,158,11,.1)" stroke="rgba(245,158,11,.3)"/>
+                <text x="37" y="42" text-anchor="middle" font-size="8.5" fill="rgba(245,158,11,.9)" font-family="monospace" font-weight="600">OCT Scan</text>
+                <text x="37" y="54" text-anchor="middle" font-size="7.5" fill="rgba(245,158,11,.55)" font-family="monospace">Input Image</text>
+                <line x1="72" y1="45" x2="98" y2="45" stroke="rgba(255,255,255,.2)" stroke-width="1.3"/>
+                <polygon points="96,41 102,45 96,49" fill="rgba(255,255,255,.3)"/>
+                <rect x="102" y="28" width="78" height="34" rx="6" fill="rgba(0,212,255,.1)" stroke="rgba(0,212,255,.3)"/>
+                <text x="141" y="41" text-anchor="middle" font-size="8.5" fill="rgba(0,212,255,.9)" font-family="monospace" font-weight="600">ROI Detector</text>
+                <text x="141" y="54" text-anchor="middle" font-size="7.5" fill="rgba(0,212,255,.6)" font-family="monospace">Patch Extraction</text>
+                <line x1="182" y1="45" x2="208" y2="45" stroke="rgba(255,255,255,.2)" stroke-width="1.3"/>
+                <polygon points="206,41 212,45 206,49" fill="rgba(255,255,255,.3)"/>
+                <rect x="212" y="28" width="90" height="34" rx="6" fill="rgba(139,92,246,.1)" stroke="rgba(139,92,246,.3)"/>
+                <text x="257" y="41" text-anchor="middle" font-size="8.5" fill="rgba(139,92,246,.9)" font-family="monospace" font-weight="600">Patch Embed</text>
+                <text x="257" y="54" text-anchor="middle" font-size="7.5" fill="rgba(139,92,246,.6)" font-family="monospace">Fusion Module</text>
+                <line x1="304" y1="45" x2="330" y2="45" stroke="rgba(255,255,255,.2)" stroke-width="1.3"/>
+                <polygon points="328,41 334,45 328,49" fill="rgba(255,255,255,.3)"/>
+                <rect x="334" y="28" width="86" height="34" rx="6" fill="rgba(236,72,153,.1)" stroke="rgba(236,72,153,.3)"/>
+                <text x="377" y="41" text-anchor="middle" font-size="8.5" fill="rgba(236,72,153,.9)" font-family="monospace" font-weight="600">ViT Encoder</text>
+                <text x="377" y="54" text-anchor="middle" font-size="7.5" fill="rgba(236,72,153,.6)" font-family="monospace">Multi-Level Attn</text>
+                <line x1="422" y1="45" x2="448" y2="45" stroke="rgba(255,255,255,.2)" stroke-width="1.3"/>
+                <polygon points="446,41 452,45 446,49" fill="rgba(255,255,255,.3)"/>
+                <rect x="452" y="28" width="80" height="34" rx="6" fill="rgba(245,158,11,.1)" stroke="rgba(245,158,11,.3)"/>
+                <text x="492" y="41" text-anchor="middle" font-size="8.5" fill="rgba(245,158,11,.9)" font-family="monospace" font-weight="600">Feature</text>
+                <text x="492" y="54" text-anchor="middle" font-size="7.5" fill="rgba(245,158,11,.6)" font-family="monospace">Fusion Head</text>
+                <line x1="534" y1="45" x2="558" y2="45" stroke="rgba(255,255,255,.2)" stroke-width="1.3"/>
+                <polygon points="556,41 562,45 556,49" fill="rgba(255,255,255,.3)"/>
+                <rect x="562" y="28" width="52" height="34" rx="6" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.3)"/>
+                <text x="588" y="41" text-anchor="middle" font-size="8.5" fill="rgba(16,185,129,.9)" font-family="monospace" font-weight="600">DME</text>
+                <text x="588" y="54" text-anchor="middle" font-size="7.5" fill="rgba(16,185,129,.6)" font-family="monospace">Classify</text>
+                <text x="310" y="82" text-anchor="middle" font-size="8" fill="rgba(255,255,255,.13)" font-family="monospace" letter-spacing="1">ROI-PATCH FUSION ViT — ARCHITECTURE</text>
+              </svg>
+            </div>
+            <ul class="detail-list">
+              <li><strong>ROI-Based Patch Embedding Fusion</strong>: instead of uniform patch tokenisation, first applies a lightweight region-detection head to identify clinically relevant retinal regions (fluid-filled cysts, sub-retinal fluid, ellipsoid zone disruptions). ROI patches are encoded with higher embedding resolution — preserving micro-structural details that uniform patching loses.</li>
+              <li><strong>Multi-level Feature Fusion</strong>: aggregates attention feature maps from multiple ViT encoder layers (early shallow features for texture, mid-level for contour, deep layers for semantic pathology) — similar in spirit to FPN but operating entirely within the transformer attention space.</li>
+              <li><strong>PyTorch implementation</strong> with a custom collation function for variable-size ROI patches, mixed-precision training (torch.cuda.amp) for faster convergence, and a weighted cross-entropy loss accounting for class imbalance in the clinical dataset (DME vs. Normal vs. Drusen).</li>
+              <li>Outperformed ResNet-50 and standard ViT-B/16 baselines on two benchmarks — <strong>Kaggle OCT 2017</strong> dataset and a proprietary clinical dataset — by ≈3.5% accuracy and ≈5% AUC-ROC through the ROI-aware patching strategy.</li>
+              <li>Validated interpretability via GradCAM++ overlays confirming the model attends to medically relevant regions, not spurious scan artefacts.</li>
+            </ul>
+            <div class="tags">
+              <span class="tag ta">PyTorch</span><span class="tag ta">ViT</span><span class="tag ta">Medical Imaging</span><span class="tag ta">GradCAM++</span><span class="tag ta">Mixed Precision</span>
+            </div>
+            <div class="plinks">
+              <a href="https://github.com/sreevardhan-2002" target="_blank" rel="noopener" class="plink"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Placeholder card -->
+      <div class="pcard pcard-empty rv" style="transition-delay:.18s">
+        <i class="fas fa-plus-circle" style="font-size:1.8rem;color:var(--text3);margin-bottom:.6rem;"></i>
+        <p style="color:var(--text3);font-size:.88rem;text-align:center;">More projects coming soon…</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ════════════════════════════════════════
+     EDUCATION
+════════════════════════════════════════ -->
+<section id="edu">
+  <div class="container">
+    <div class="rv">
+      <span class="sec-tag">// academic.background</span>
+      <h2 class="sec-title">Education</h2>
+      <p class="sec-sub">Academic foundation built on rigorous Computer Science and Engineering principles.</p>
+    </div>
+
+    <div class="edu-grid">
+
+      <div class="ecard rv" style="transition-delay:.08s">
+        <span class="ebadge em">M.Tech</span>
+        <h3>Vellore Institute of Technology, Chennai</h3>
+        <div class="deg">Master of Technology — Computer Science &amp; Engineering</div>
+        <div class="emeta">
+          <span class="eyear"><i class="fas fa-calendar" style="margin-right:4px;"></i>2024 – Present</span>
+          <span class="ecgpa">CGPA: 9.36</span>
+        </div>
+      </div>
+
+      <div class="ecard rv" style="transition-delay:.16s">
+        <span class="ebadge eb">B.Tech</span>
+        <h3>Vellore Institute of Technology, Chennai</h3>
+        <div class="deg">Bachelor of Technology — Electronics &amp; Communication Engineering</div>
+        <div class="emeta">
+          <span class="eyear"><i class="fas fa-calendar" style="margin-right:4px;"></i>2020 – 2024</span>
+          <span class="ecgpa">CGPA: 8.99</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ════════════════════════════════════════
+     CONTACT
+════════════════════════════════════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="rv">
+      <span class="sec-tag">// contact.me</span>
+      <h2 class="sec-title">Let's <span>Connect</span></h2>
+      <p class="sec-sub" style="margin:0 auto;">Open to collaborations, research opportunities, and interesting conversations about AI.</p>
+    </div>
+
+    <div class="contact-grid">
+      <a href="tel:+919392757212" class="ccard cp rv" style="transition-delay:.08s">
+        <i class="fas fa-phone"></i>
+        <span class="cl">Phone</span>
+        <span class="cv">+91 93927 57212</span>
+      </a>
+      <a href="mailto:sreevardhan4510@gmail.com" class="ccard ce rv" style="transition-delay:.14s">
+        <i class="fas fa-envelope"></i>
+        <span class="cl">Email</span>
+        <span class="cv">sreevardhan4510@gmail.com</span>
+      </a>
+      <a href="https://github.com/sreevardhan-2002" target="_blank" rel="noopener" class="ccard cg rv" style="transition-delay:.20s">
+        <i class="fab fa-github"></i>
+        <span class="cl">GitHub</span>
+        <span class="cv">sreevardhan-2002</span>
+      </a>
+      <a href="https://linkedin.com/in/pemmareddy-sreevardhan-4b27021bb" target="_blank" rel="noopener" class="ccard cl2 rv" style="transition-delay:.26s">
+        <i class="fab fa-linkedin"></i>
+        <span class="cl">LinkedIn</span>
+        <span class="cv">pemmareddy-sreevardhan</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
+<footer>
+  Designed &amp; built by <span>Pemmareddy Sreevardhan</span> &nbsp;·&nbsp; Powered by passion for AI &nbsp;·&nbsp; <span>2026</span>
+</footer>
+
+<!-- ════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════ -->
+<script>
+/* ─── CURSOR ─── */
+const cur  = document.getElementById('cur');
+const cur2 = document.getElementById('cur2');
+let mx = 0, my = 0, fx = 0, fy = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cur.style.left = (mx - 5) + 'px';
+  cur.style.top  = (my - 5) + 'px';
+});
+(function moveFol() {
+  fx += (mx - fx - 17) * 0.13;
+  fy += (my - fy - 17) * 0.13;
+  cur2.style.left = fx + 'px';
+  cur2.style.top  = fy + 'px';
+  requestAnimationFrame(moveFol);
+})();
+document.querySelectorAll('a,button,.sk,.proj,.pcard,.pcard-v2,.acc-item,.ccard,.stat,.ecard').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cur.style.transform  = 'scale(2.5)';
+    cur.style.background = 'var(--purple)';
+    cur2.style.borderColor = 'rgba(139,92,246,.5)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cur.style.transform  = 'scale(1)';
+    cur.style.background = 'var(--cyan)';
+    cur2.style.borderColor = 'rgba(0,212,255,.45)';
+  });
+});
+
+/* ─── PROGRESS BAR ─── */
+const pbar = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  pbar.style.width = pct + '%';
+});
+
+/* ─── NAVBAR SCROLL + ACTIVE ─── */
+const navEl = document.getElementById('nav');
+const navAs = document.querySelectorAll('.nav-links a');
+const sects  = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  navEl.classList.toggle('scrolled', window.scrollY > 50);
+  let cur = '';
+  sects.forEach(s => { if (window.scrollY >= s.offsetTop - 110) cur = s.id; });
+  navAs.forEach(a => {
+    a.classList.remove('active');
+    if (a.getAttribute('href') === '#' + cur) a.classList.add('active');
+  });
+});
+
+/* ─── BURGER ─── */
+document.getElementById('burger').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+});
+
+/* ─── SMOOTH SCROLL ─── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+
+/* ─── PARTICLE CANVAS ─── */
+const cvs = document.getElementById('canvas');
+const c   = cvs.getContext('2d');
+function resize() { cvs.width = window.innerWidth; cvs.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+
+class P {
+  constructor() { this.reset(); }
+  reset() {
+    this.x  = Math.random() * cvs.width;
+    this.y  = Math.random() * cvs.height;
+    this.vx = (Math.random() - .5) * .55;
+    this.vy = (Math.random() - .5) * .55;
+    this.r  = Math.random() * 1.4 + .5;
+    this.a  = Math.random() * .45 + .15;
+    this.col = Math.random() > .5 ? '0,212,255' : '139,92,246';
+  }
+  tick() {
+    this.x += this.vx; this.y += this.vy;
+    if (this.x < 0 || this.x > cvs.width || this.y < 0 || this.y > cvs.height) this.reset();
+  }
+  draw() {
+    c.beginPath();
+    c.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    c.fillStyle = `rgba(${this.col},${this.a})`;
+    c.fill();
+  }
+}
+
+const pts = Array.from({ length: 110 }, () => new P());
+let pm = { x: null, y: null };
+document.addEventListener('mousemove', e => { pm.x = e.clientX; pm.y = e.clientY; });
+
+function frame() {
+  c.clearRect(0, 0, cvs.width, cvs.height);
+  pts.forEach(p => { p.tick(); p.draw(); });
+  for (let i = 0; i < pts.length; i++) {
+    for (let j = i + 1; j < pts.length; j++) {
+      const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+      const d = Math.sqrt(dx * dx + dy * dy);
+      if (d < 115) {
+        c.beginPath();
+        c.moveTo(pts[i].x, pts[i].y);
+        c.lineTo(pts[j].x, pts[j].y);
+        c.strokeStyle = `rgba(0,212,255,${.07 * (1 - d / 115)})`;
+        c.lineWidth = .5; c.stroke();
+      }
+    }
+    if (pm.x) {
+      const dx = pts[i].x - pm.x, dy = pts[i].y - pm.y;
+      const d = Math.sqrt(dx * dx + dy * dy);
+      if (d < 145) {
+        c.beginPath();
+        c.moveTo(pts[i].x, pts[i].y);
+        c.lineTo(pm.x, pm.y);
+        c.strokeStyle = `rgba(139,92,246,${.22 * (1 - d / 145)})`;
+        c.lineWidth = .8; c.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(frame);
+}
+frame();
+
+/* ─── TYPEWRITER ─── */
+const typed = document.querySelector('.typed');
+const words = [
+  'Data Science Intern @ Honeywell',
+  'Multi-Agent AI Architect',
+  'RAG Pipeline Engineer',
+  'Computer Vision Researcher',
+  'LLM Systems Builder',
+];
+let wi = 0, ci = 0, del = false;
+function tw() {
+  const w = words[wi];
+  typed.textContent = del ? w.slice(0, ci - 1) : w.slice(0, ci + 1);
+  del ? ci-- : ci++;
+  if (!del && ci === w.length) { del = true; setTimeout(tw, 2000); return; }
+  if (del && ci === 0)         { del = false; wi = (wi + 1) % words.length; }
+  setTimeout(tw, del ? 48 : 78);
+}
+tw();
+
+/* ─── SCROLL REVEAL ─── */
+const rvEls = document.querySelectorAll('.rv,.rvL,.rvR');
+const rvObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); rvObs.unobserve(e.target); } });
+}, { threshold: 0.1 });
+rvEls.forEach(el => rvObs.observe(el));
+
+/* ─── COUNTER ANIMATION ─── */
+function animCount(el) {
+  const target = parseFloat(el.dataset.t);
+  const dec    = parseInt(el.dataset.d || '0');
+  const dur    = 1800;
+  const t0     = performance.now();
+  (function upd(now) {
+    const p = Math.min((now - t0) / dur, 1);
+    const e = 1 - Math.pow(1 - p, 3);
+    el.textContent = (e * target).toFixed(dec);
+    if (p < 1) requestAnimationFrame(upd);
+    else el.textContent = target.toFixed(dec);
+  })(performance.now());
+}
+const cntObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { animCount(e.target); cntObs.unobserve(e.target); }
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.stat-n[data-t]').forEach(el => cntObs.observe(el));
+
+/* ─── ACCORDION (EXPERIENCE) ─── */
+function toggleAcc(id) {
+  const el = document.getElementById(id);
+  const wasOpen = el.classList.contains('open');
+  // close all
+  document.querySelectorAll('.acc-item.open').forEach(a => a.classList.remove('open'));
+  if (!wasOpen) el.classList.add('open');
+}
+
+/* ─── APPROACH TABS (INSIDE ACCORDION 3) ─── */
+function switchTab(btn, panelId, accId) {
+  const acc = document.getElementById(accId);
+  acc.querySelectorAll('.appr-tab').forEach(t => t.classList.remove('active'));
+  acc.querySelectorAll('.appr-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+
+/* ─── PROJECT CARD EXPAND ─── */
+function togglePCard(btn) {
+  const card = btn.closest('.pcard-v2');
+  card.classList.toggle('pc-open');
+  btn.innerHTML = card.classList.contains('pc-open')
+    ? '<i class="fas fa-compress-alt" style="font-size:.8rem"></i> Collapse <i class="fas fa-chevron-down pc-arrow" style="transform:rotate(180deg);display:inline-block"></i>'
+    : '<i class="fas fa-microscope" style="font-size:.8rem"></i> Deep Dive <i class="fas fa-chevron-down pc-arrow"></i>';
+}
+
+</script>
+</body>
+</html>
