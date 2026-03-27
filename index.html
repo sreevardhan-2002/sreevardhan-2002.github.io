@@ -599,7 +599,7 @@
           <div class="stat-l">Months @ Honeywell</div>
         </div>
         <div class="stat">
-          <div class="stat-n" data-t="5" data-d="0">0</div>
+          <div class="stat-n" data-t="6" data-d="0">0</div>
           <div class="stat-l">AI Systems Built</div>
         </div>
       </div>
@@ -1043,6 +1043,97 @@
           </div>
         </div>
 
+        <!-- ═══ ACCORDION 5 ═══ -->
+        <div class="acc-item rv" id="acc5" style="transition-delay:.28s">
+          <button class="acc-head" onclick="toggleAcc('acc5')">
+            <div class="acc-left">
+              <div class="acc-icon-w" style="background:rgba(204,0,0,.12);color:#ff6060"><i class="fas fa-hard-hat"></i></div>
+              <div class="acc-tg">
+                <span class="acc-title">Commissioning Co-Pilot</span>
+                <div class="acc-preview">
+                  <span class="chip">LangGraph</span><span class="chip">Gemini 2.0 Flash</span><span class="chip">FAISS</span><span class="chip">Vertex AI</span><span class="chip">Streamlit</span>
+                </div>
+              </div>
+            </div>
+            <div class="acc-toggle"><span>Explore</span><i class="fas fa-chevron-down acc-arrow" style="margin-left:.3rem"></i></div>
+          </button>
+          <div class="acc-body">
+            <div class="acc-body-inner">
+              <!-- Pipeline SVG -->
+              <div style="background:linear-gradient(135deg,rgba(204,0,0,.04),rgba(0,95,158,.08));border:1px solid var(--border);border-radius:12px;padding:1.2rem;overflow-x:auto;">
+                <svg width="100%" viewBox="0 0 700 110" fill="none" xmlns="http://www.w3.org/2000/svg" style="min-width:560px;display:block">
+                  <!-- Engineer -->
+                  <rect x="4" y="38" width="62" height="34" rx="6" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.3)"/>
+                  <text x="35" y="52" text-anchor="middle" font-size="8.5" fill="rgba(16,185,129,.9)" font-family="monospace" font-weight="600">Engineer</text>
+                  <text x="35" y="64" text-anchor="middle" font-size="7.5" fill="rgba(16,185,129,.55)" font-family="monospace">types reply</text>
+                  <line x1="68" y1="55" x2="92" y2="55" stroke="rgba(255,255,255,.2)" stroke-width="1.3"/>
+                  <polygon points="90,51 96,55 90,59" fill="rgba(255,255,255,.3)"/>
+                  <!-- LangGraph -->
+                  <rect x="96" y="30" width="96" height="50" rx="7" fill="rgba(204,0,0,.1)" stroke="rgba(204,0,0,.35)"/>
+                  <text x="144" y="50" text-anchor="middle" font-size="9" fill="rgba(220,80,80,.9)" font-family="monospace" font-weight="700">LangGraph</text>
+                  <text x="144" y="63" text-anchor="middle" font-size="8" fill="rgba(220,80,80,.6)" font-family="monospace">5-Agent Flow</text>
+                  <!-- fork -->
+                  <line x1="194" y1="46" x2="222" y2="34" stroke="rgba(255,255,255,.18)" stroke-width="1.2"/>
+                  <line x1="194" y1="64" x2="222" y2="76" stroke="rgba(255,255,255,.18)" stroke-width="1.2"/>
+                  <!-- Guide Agent -->
+                  <rect x="224" y="18" width="100" height="30" rx="6" fill="rgba(0,95,158,.12)" stroke="rgba(0,95,158,.4)"/>
+                  <text x="274" y="31" text-anchor="middle" font-size="8.5" fill="rgba(100,160,220,.9)" font-family="monospace" font-weight="600">Guide Agent</text>
+                  <text x="274" y="42" text-anchor="middle" font-size="7.5" fill="rgba(100,160,220,.6)" font-family="monospace">FAISS + Qwen3 + Gemini</text>
+                  <!-- Watch Agent -->
+                  <rect x="224" y="60" width="100" height="30" rx="6" fill="rgba(232,115,0,.12)" stroke="rgba(232,115,0,.4)"/>
+                  <text x="274" y="73" text-anchor="middle" font-size="8.5" fill="rgba(232,115,0,.9)" font-family="monospace" font-weight="600">Watch Agent</text>
+                  <text x="274" y="84" text-anchor="middle" font-size="7.5" fill="rgba(232,115,0,.6)" font-family="monospace">PASS/FAIL · Fault detect</text>
+                  <!-- arrows -->
+                  <line x1="326" y1="33" x2="354" y2="33" stroke="rgba(255,255,255,.18)" stroke-width="1.2"/>
+                  <line x1="326" y1="75" x2="354" y2="75" stroke="rgba(255,255,255,.18)" stroke-width="1.2"/>
+                  <!-- Memory Agent -->
+                  <rect x="356" y="18" width="100" height="30" rx="6" fill="rgba(0,122,61,.12)" stroke="rgba(0,122,61,.4)"/>
+                  <text x="406" y="31" text-anchor="middle" font-size="8.5" fill="rgba(0,180,90,.9)" font-family="monospace" font-weight="600">Memory Agent</text>
+                  <text x="406" y="42" text-anchor="middle" font-size="7.5" fill="rgba(0,180,90,.6)" font-family="monospace">step counter · state</text>
+                  <!-- Fault msg -->
+                  <rect x="356" y="60" width="100" height="30" rx="6" fill="rgba(153,0,0,.12)" stroke="rgba(153,0,0,.4)"/>
+                  <text x="406" y="73" text-anchor="middle" font-size="8.5" fill="rgba(220,80,80,.9)" font-family="monospace" font-weight="600">3-Layer Fault</text>
+                  <text x="406" y="84" text-anchor="middle" font-size="7.5" fill="rgba(220,80,80,.6)" font-family="monospace">Gemini+Manual+Records</text>
+                  <!-- merge -->
+                  <line x1="458" y1="33" x2="486" y2="55" stroke="rgba(255,255,255,.15)" stroke-width="1.1"/>
+                  <line x1="458" y1="75" x2="486" y2="55" stroke="rgba(255,255,255,.15)" stroke-width="1.1"/>
+                  <!-- Report Agent -->
+                  <rect x="488" y="38" width="96" height="34" rx="6" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.3)"/>
+                  <text x="536" y="52" text-anchor="middle" font-size="8.5" fill="rgba(16,185,129,.9)" font-family="monospace" font-weight="600">Report Agent</text>
+                  <text x="536" y="63" text-anchor="middle" font-size="7.5" fill="rgba(16,185,129,.55)" font-family="monospace">Auto-generate PDF</text>
+                  <!-- arrow -->
+                  <line x1="586" y1="55" x2="612" y2="55" stroke="rgba(255,255,255,.18)" stroke-width="1.2"/>
+                  <polygon points="610,51 616,55 610,59" fill="rgba(255,255,255,.3)"/>
+                  <rect x="618" y="38" width="74" height="34" rx="6" fill="rgba(245,158,11,.1)" stroke="rgba(245,158,11,.3)"/>
+                  <text x="655" y="52" text-anchor="middle" font-size="8.5" fill="rgba(245,158,11,.9)" font-family="monospace" font-weight="600">Streamlit</text>
+                  <text x="655" y="63" text-anchor="middle" font-size="7.5" fill="rgba(245,158,11,.55)" font-family="monospace">1-click download</text>
+                  <text x="350" y="104" text-anchor="middle" font-size="8" fill="rgba(255,255,255,.13)" font-family="monospace" letter-spacing="1">COMMISSIONING CO-PILOT — 5-AGENT LANGGRAPH PIPELINE</text>
+                </svg>
+              </div>
+              <ul class="detail-list">
+                <li>Built a <strong>5-agent LangGraph pipeline</strong> — Context, Guide, Watch, Memory, and Report agents — each with a single responsibility, coordinated by LangGraph's StateGraph with a shared session state object tracking equipment model, site, current step, completed steps, and open faults across the entire commissioning session.</li>
+                <li>The <strong>Guide Agent</strong> runs FAISS similarity search over 51 overlapping chunks of the HC900 manual (encoded offline with Qwen3-Embedding-0.6B into a 1024-dim FAISS index) to retrieve the 3 most relevant sections per step — passed as context to Gemini 2.0 Flash via Vertex AI so the engineer never needs to open a manual.</li>
+                <li>The <strong>Watch Agent</strong> performs real-time fault detection: fetches expected values from the 10-step commissioning checklist CSV (Pandas), retrieves the fault code table via FAISS, sends engineer reply + expected value + manual context to Gemini 2.0 Flash for PASS/FAIL judgment. On FAIL: locates fault code in manual and searches 24 past fault records (Pandas filter) for the exact resolution a previous engineer used.</li>
+                <li>Delivers a <strong>3-layer fault message</strong> instantly: (1) Gemini's diagnosis and reason, (2) exact manual fault code entry and official fix procedure, (3) verbatim past engineer resolution from real site records — giving actionable guidance entirely within the chat window.</li>
+                <li>The <strong>Report Agent</strong> auto-generates a complete commissioning report at session end — all completed steps, faults, resolutions, timestamps, equipment specs, and site contact — surfaced as a 1-click download in the Streamlit UI. Zero manual report writing required from the engineer.</li>
+                <li>Entire RAG index built once offline in under 2 minutes; loaded at startup. FAISS search at runtime takes &lt;0.5 seconds on a laptop CPU — making the system viable for field use without internet or cloud latency.</li>
+              </ul>
+              <!-- Chat snippet -->
+              <div style="background:rgba(0,0,0,.28);border:1px solid var(--border);border-radius:8px;padding:.9rem 1.1rem;">
+                <div style="font-family:var(--fc);font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:.6rem">Real Conversation Snippet</div>
+                <div style="display:flex;flex-direction:column;gap:.4rem">
+                  <div style="background:rgba(204,0,0,.08);border:1px solid rgba(204,0,0,.2);border-radius:6px;padding:.45rem .75rem;font-size:.8rem;color:var(--text2);"><span style="color:rgba(220,80,80,.8);font-family:var(--fc);font-size:.72rem">CO-PILOT</span><br>Step 3/10 [ELECTRICAL] — Measure power supply output. Expected: 21.6V–26.4V DC. What does your multimeter read?</div>
+                  <div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;padding:.45rem .75rem;font-size:.8rem;color:var(--text2);text-align:right;"><span style="color:var(--text3);font-family:var(--fc);font-size:.72rem">ENGINEER</span><br>voltage is showing 19V</div>
+                  <div style="background:rgba(232,115,0,.08);border:1px solid rgba(232,115,0,.25);border-radius:6px;padding:.45rem .75rem;font-size:.8rem;color:var(--text2);"><span style="color:rgba(232,115,0,.85);font-family:var(--fc);font-size:.72rem">CO-PILOT — ⚠️ FAULT E001</span><br><strong style="color:var(--text)">19V below minimum (21.6V).</strong> Manual: Check PSU terminals, adjust output potentiometer. Past record: Adjusted power supply potentiometer to 24V DC. Please fix and confirm.</div>
+                </div>
+              </div>
+              <div class="chips">
+                <span class="chip">LangGraph</span><span class="chip">Gemini 2.0 Flash</span><span class="chip">Vertex AI</span><span class="chip">FAISS</span><span class="chip">Qwen3-Embedding-0.6B</span><span class="chip">Pandas</span><span class="chip">Streamlit</span><span class="chip">HC900</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div><!-- /proj-list -->
     </div><!-- /exp-wrap -->
   </div>
@@ -1148,6 +1239,8 @@
           </div>
         </div>
       </div>
+
+      <!-- Commissioning Co-Pilot is in the Experience section above -->
 
       <!-- Placeholder card -->
       <div class="pcard pcard-empty rv" style="transition-delay:.18s">
